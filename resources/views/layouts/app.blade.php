@@ -9,6 +9,9 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    <!-- titre -->
+    <title>@yield('title')</title>
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
@@ -52,10 +55,15 @@
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+                                    {{ Auth::user()->pseudo }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+
+                                    <a class="dropdown-item"
+                                        href="{{ route('profil', $user = Auth::user()->id) }}">Mon profil</a>
+                                        <a class="dropdown-item"
+                                        href="{{ route('moncompte', $user = Auth::user()->id) }}">Mon compte</a>             
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -67,12 +75,29 @@
                                     </form>
                                 </div>
                             </li>
+
+
                         @endguest
                     </ul>
                 </div>
             </div>
         </nav>
 
+        <div class="container-fluid text-center">
+            @if (session()->has('message'))
+                <p class="alert alert-success">{{ session()->get('message') }}</p>
+            @endif
+    
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+        </div>
         <main class="py-4">
             @yield('content')
         </main>

@@ -24,7 +24,9 @@ return new class extends Migration
             $table->string('image');
             $table->string('tags', 50);
             // clé étrangère vers table "user"
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+
+
         });
     }
 

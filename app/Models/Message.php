@@ -17,6 +17,6 @@ class Message extends Model
 
     public function commentaires()
     {
-        return $this->hasMany(Message::class);
+        return $this->hasMany(Commentaire::class);
     }
 }
